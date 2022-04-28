@@ -1,4 +1,5 @@
-#[Mорской Бой](https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D1%80%D1%81%D0%BA%D0%BE%D0%B9_%D0%B1%D0%BE%D0%B9_(%D0%B8%D0%B3%D1%80%D0%B0))
+[Mорской Бой](https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D1%80%D1%81%D0%BA%D0%BE%D0%B9_%D0%B1%D0%BE%D0%B9_(%D0%B8%D0%B3%D1%80%D0%B0))
+=============
 Этот проект написано в пяти файлов:
 - main.py(главный файл)
 - __global_variable.py__(глобальные перемены)
@@ -7,9 +8,17 @@
 - __dotted_and_hit.py__(спомогательная функция)
 Используется библиотеки [pygame](https://www.pygame.org/docs/), [random](https://docs.python.org/3/library/random.html), [copy](https://docs.python.org/3/library/copy.html), [asyncio](https://docs.python.org/3/library/asyncio.html)
 ___
-__Запуск игры__ производится компиляцией файла main.py
-![Запуск игры](Picturec/запуск.jpg)
-или с помощью клавиши __Ctrl + F5__.
+__Запуск игры:__
+
+Сначала клонируйте репозиторий
+***
+    git clone https://github.com/asliddin03/TP_Sea_Battle.git
+Установите нужные библтотеки
+***
+    pip install -r requirments.txt
+Запуск
+***
+    python3 main.py
 ___
 Игра запускается нажатием кнопки __START GAME__,
 ![Кнопка start](Picturec/start.jpg)
