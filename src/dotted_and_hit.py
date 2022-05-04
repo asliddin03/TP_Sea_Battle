@@ -1,8 +1,9 @@
+import pygame
 import global_variable as glob_var
 
 
 def dotted_and_hit(fired_BL, comp_turn, diagonal_only=True):
-    a, b = fired_BL
+    a, b = fired_BL 
     x, y = 0, 11
     if comp_turn:
         a += 15

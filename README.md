@@ -48,3 +48,20 @@
 - 4 корабля — 1 клетка («однопалубные»)
   **При окончание игры обьявляется победитель.**
   ![end](Picturec/end.jpg)
+
+__Нужные команды для клонирование репозитории и установки необходимых фавлов__
+***
+    git clone -b dev https://github.com/asliddin03/Python.git
+    pip install -r requirements.txt
+
+__Установка питон и допонительного пакета__
+***
+    sudo apt update
+    sudo apt install python3.8
+    sudo apt install -y python3-pip
+__Переходите в папку src__
+***
+    cd src
+__Запуск:__
+***
+    python3 main.py

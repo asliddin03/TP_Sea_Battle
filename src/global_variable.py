@@ -6,9 +6,10 @@ from draw import ships
 pygame.init()
 WH = (255, 255, 255)
 BL = (0, 0, 0)
+BLUE = (0, 180, 180)
 RED = (255, 0, 0)
-GR = (0, 150, 150)
-L_GRAY = (192, 192, 192)
+GR = (0, 200, 50)
+L_GRAY = (100, 200, 0)
 RB = (75, 0, 0)
 block_sz = 50
 l_margin = 100
@@ -22,10 +23,12 @@ dotted_to_shoot = set()
 for_comp_to_shoot = set()
 last_hits = []
 destroyed_ships = []
+LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 
 pygame.display.set_caption("Sea Battle")
 screen = pygame.display.set_mode(size)
-font = pygame.font.SysFont('notosans', int(block_sz / 1.5))
+font_sz = int(block_sz / 1.5)
+font = pygame.font.SysFont('notosans', font_sz)
 gameover_f = pygame.font.SysFont('notosans', 3 * block_sz)
 
 human = ships()

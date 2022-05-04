@@ -3,9 +3,10 @@ from cmath import rect
 from button import button
 import global_variable as variables
 from draw import draw, ships
+from Grid import Grid
 from dotted_and_hit import dotted_and_hit
+import random   
 import pygame
-import random
 
 pygame.init()
 
@@ -13,22 +14,12 @@ st_game = variables.l_margin + 10 * variables.block_sz
 st_button = button(st_game, "START GAME")
 
 
-def sign():
-    list = [variables.font.render("COMPUTER", True, variables.RED), variables.font.render(
-        "HUMAN", True, variables.RED)]
-    for i in range(len(list)):
-        variables.screen.blit(list[i], (variables.l_margin + (5 + 15 * i) * variables.block_sz - list[i].get_width() //
-                                        2, variables.upp_margin - variables.block_sz//2 - int(variables.block_sz / 1.5)))
-
-
-def shoot(set_to_shoot):
-    pygame.time.delay(700)
-    comp_fired = random.choice(tuple(set_to_shoot))
-    variables.ava_to_fire_set.discard(comp_fired)
-    return hit_or_miss(comp_fired, variables.H_ships_w, True)
-
-
 def hit_or_miss(fired_BL, oppo_ships_list, comp_turn):
+    """
+    Проверяет, является ли блок, в коsudo pip3 install pygameторый был произведен выстрел компьютером или человеком, попаданием или промахом.
+    Обновляет наборы с помощью точек.
+    Удаляет уничтоженные корабли из списка кораблей.
+    """
     for i in oppo_ships_list:
         if fired_BL in i:
             dotted_and_hit(
@@ -62,7 +53,23 @@ def hit_or_miss(fired_BL, oppo_ships_list, comp_turn):
     return False
 
 
+def shoot(set_to_shoot):
+    """
+    Случайным образом выбирает блок из доступных для стрельбы из набора
+    """
+    pygame.time.delay(700)
+    comp_fired = random.choice(tuple(set_to_shoot))
+    variables.ava_to_fire_set.discard(comp_fired)
+    return hit_or_miss(comp_fired, variables.H_ships_w, True)
+
+
 def update_around_comp_hit(fired_BL, computer_hits=True):
+    """
+    Обновляет around_last_computer_hit_set. Добавляет к этому набору вертикальные или горизонтальные блоки вокруг
+    блока, который был поражен последним. Затем удаляет те блоки из этого набора, в которые стреляли, но промахнулись.
+    around_last_computer_hit_set заставляет компьютер выбирать правильные блоки, чтобы быстро уничтожить корабль
+    , вместо того, чтобы просто случайным образом стрелять по совершенно случайным блокам.
+    """
     if computer_hits and fired_BL in variables.around_hit_set:
         new_hit_set = set()
 
@@ -116,17 +123,14 @@ def update_around_comp_hit(fired_BL, computer_hits=True):
     variables.ava_to_fire_set -= variables.dotted_to_shoot
 
 
-def Draw_hit_Bl(hit_Bl):
-    for block in hit_Bl:
-        x1 = variables.block_sz * (block[0]-1) + variables.l_margin
-        y1 = variables.block_sz * (block[1]-1) + variables.upp_margin
-        pygame.draw.line(variables.screen, variables.BL, (x1, y1), (x1 +
-                                                                    variables.block_sz, y1+variables.block_sz), variables.block_sz//7)
-        pygame.draw.line(variables.screen, variables.BL, (x1, y1+variables.block_sz),
-                         (x1+variables.block_sz, y1), variables.block_sz//7)
-
-
 def show_mess(mess, r, w_f=variables.font):
+    """
+    Выводит сообщение на экран в центре заданного прямоугольника.
+    Аргументы:
+        mess (str): Сообщение для печати
+        r (tuple): прямоугольник в формате
+        w_f (объект шрифта pygame): Какой шрифт использовать для печати сообщения. По умолчанию используется шрифт.
+    """
     mess_w, mess_h = w_f.size(mess)
     mess_r = pygame.Rect(r)
     x = mess_r.centerx - mess_w / 2
@@ -134,15 +138,15 @@ def show_mess(mess, r, w_f=variables.font):
     backgr_r = pygame.Rect(x - variables.block_sz / 2,
                            y, mess_w + variables.block_sz, mess_h)
     mess_blit = w_f.render(mess, True, variables.RED)
-    variables.screen.fill(variables.WH, backgr_r)
+    variables.screen.fill(variables.BLUE, backgr_r)
     variables.screen.blit(mess_blit, (x, y))
 
 
 def main():
-    variables.screen.fill(variables.WH)
+    variables.screen.fill(variables.BLUE)
     f = True
-    draw.grid()
-    sign()
+    Grid("COMPUTER", 0)
+    Grid("HUMAN", 15)
     draw.ship(variables.human.ships)
     rect_button = (650, 352, 194, 72)
     game_over = False
@@ -158,7 +162,7 @@ def main():
             elif i.type == pygame.MOUSEBUTTONDOWN and st_button.rect.collidepoint(m):
                 f = False
         pygame.display.update()
-        variables.screen.fill(variables.WH, (650, 332, 154, 72))
+        variables.screen.fill(variables.BLUE, (650, 332, 154, 72))
 
     while not game_over:
         for i in pygame.event.get():
@@ -168,11 +172,20 @@ def main():
                 x, y = i.pos
                 if 100 <= x <= 600 and 80 <= y <= 580:
                     if (variables.l_margin < x < variables.l_margin + 10*variables.block_sz) and (
-                                                                variables.upp_margin < y < variables.upp_margin + 10*variables.block_sz):
+                            variables.upp_margin < y < variables.upp_margin + 10*variables.block_sz):
+                        f = 0
                         fired_BL = ((x - variables.l_margin) // variables.block_sz + 1,
                                     (y - variables.upp_margin) // variables.block_sz + 1)
-                    comp_turn = not hit_or_miss(
-                        fired_BL, variables.ship_w, comp_turn)
+                        for i in variables.hit_Bl:
+                            if i == fired_BL:
+                                f = 1
+
+                        for i in variables.dotted:
+                            if i == fired_BL:
+                                f = 1
+                    if f == 0:
+                        comp_turn = not hit_or_miss(
+                            fired_BL, variables.ship_w, comp_turn)
 
         if comp_turn:
             if variables.around_hit_set:
@@ -181,7 +194,7 @@ def main():
                 comp_turn = shoot(variables.ava_to_fire_set)
 
         draw.dotted(variables.dotted)
-        Draw_hit_Bl(variables.hit_Bl)
+        draw.hit_Bl(variables.hit_Bl)
         draw.ship(variables.destroyed_ships)
         if not variables.computer.ships_set:
             show_mess(
