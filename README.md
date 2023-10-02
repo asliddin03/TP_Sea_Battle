@@ -3,23 +3,23 @@
 Этот проект написано в пяти файлов:
 
 - main.py(главный файл)
-- **global_variable.py**(глобальные перемены)
+- **global_variable.py**(глобальные переменные)
 - button.py(кнопки)
-- draw.py(рисует корабли и другие)
-- **dotted_and_hit.py**(спомогательная функция)
-  Используется библиотеки [pygame](https://www.pygame.org/docs/), [random](https://docs.python.org/3/library/random.html), [copy](https://docs.python.org/3/library/copy.html), [asyncio](https://docs.python.org/3/library/asyncio.html)
+- draw.py(рисует корабли и тд)
+- **dotted_and_hit.py**(вспомогательная функция)
+  Используются библиотеки [pygame](https://www.pygame.org/docs/), [random](https://docs.python.org/3/library/random.html), [copy](https://docs.python.org/3/library/copy.html), [asyncio](https://docs.python.org/3/library/asyncio.html)
 
 ---
 
 **Запуск игры:**
 
-Сначала клонируйте репозиторий
+Сначала склонируйте репозиторий
 
 ---
 
     git clone https://github.com/asliddin03/TP_Sea_Battle.git
 
-Установите нужные библтотеки
+Установите нужные библиотеки
 
 ---
 
@@ -49,12 +49,12 @@
   **При окончание игры обьявляется победитель.**
   ![end](Picturec/end.jpg)
 
-__Нужные команды для клонирование репозитории и установки необходимых фавлов__
+__Нужные команды для клонирования репозитория и установки необходимых фавлов__
 ***
     git clone -b dev https://github.com/asliddin03/Python.git
     pip install -r requirements.txt
 
-__Установка питон и допонительного пакета__
+__Установка python и допонительного пакета__
 ***
     sudo apt update
     sudo apt install python3.8
